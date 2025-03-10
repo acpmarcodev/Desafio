@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  app:
+    image: desafio:latest  
+    build: .
+    ports:
+      - "85:80" 
+    depends_on:
+      - db
+    networks:
+      - minha-rede
+
+  db:
+    image: postgres:16
+    restart: always
+    environment:
+      POSTGRES_DB: desafio
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: x
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - minha-rede
+
+volumes:
+  pgdata:
+
+networks:
+  minha-rede:
